@@ -1,0 +1,150 @@
+#!/usr/bin/env bash
+# 本脚本封装buildroot的make命令，支持直接INOS项目根目录上运行和在.smake.local中缓存buildroot的编译配置，不需要每次都输入一长串的make命令。
+# 本脚本最终会执行以下命令：
+# cd ${WORKDIR}/buildroot
+# export ${env}
+# make BR2_EXTERNAL=.. O=${OUTPUT} ${OPTS}
+# cd -
+
+WORKDIR=$(pwd)
+# WORKDIR=$(cd $(dirname $0);cd ..; pwd)
+SMAKE=${0}
+TOOLS_DIR=${WORKDIR}/tools
+
+if [ ! -d ${WORKDIR}/.repo ]; then
+    echo "Must run in project root!!!"
+    exit 1
+fi
+
+exe() {
+    echo "$@"; $@
+}
+
+_usage() {
+    make -h
+}
+
+_reinstall() {
+    set -e
+    _remove
+    _install
+    set +e
+}
+
+_install() {
+    install -m 0555 ${SMAKE} /usr/local/bin/${SMAKE##*/}
+    if [ $? -eq 0 ]; then
+        echo "Installed ${SMAKE##*/} to /usr/local/bin"
+    fi
+}
+
+_remove() {
+    rm -f /usr/local/bin/${SMAKE##*/}
+    if [ $? -eq 0 ]; then
+        echo "Removed ${SMAKE##*/} from /usr/local/bin"
+    fi
+}
+
+_store_local() {
+    python ${TOOLS_DIR}/smake_local.py -f ${WORKDIR}/.smake.local set --pairs $@
+}
+
+_read_local() {
+    python ${TOOLS_DIR}/smake_local.py -f ${WORKDIR}/.smake.local get -k $1
+}
+
+_real_path() {
+    if [ "${1:0:1}" = "/" ]; then
+        REAL_PATH="$1"
+    else
+        REAL_PATH="${WORKDIR}/$1"
+    fi
+}
+
+main() {
+    local OUTPUT DOWNLOAD_DIR
+    local OPTS
+
+    while [ ${#} -gt 0 ]; do
+        case "${1}" in
+        (-h|--help)
+            _usage
+            exit 0
+            ;;
+        (--install)
+            _install
+            exit 0
+            ;;
+        (--reinstall)
+            _reinstall
+            exit 0
+            ;;
+        (--remove)
+            _remove
+            exit 0
+            ;;
+        (O=*)
+            _real_path ${1##O=}
+            OUTPUT="${REAL_PATH}"
+            shift 1
+            ;;
+        (BR2_DL_DIR=*)
+            _real_path ${1##BR2_DL_DIR=}
+            DOWNLOAD_DIR="${REAL_PATH}"
+            shift 1
+            ;;        
+        (BR2_DEFCONFIG=*)
+            # 将BR2_DEFCONFIG指定的相对路径替换为基于WORKDIR的相对路径
+            _real_path ${1##BR2_DEFCONFIG=}
+            OPTS="${OPTS} BR2_DEFCONFIG=${REAL_PATH}"
+            shift 1
+            ;;  
+        (-d|--download)
+            _real_path ${2}
+            DOWNLOAD_DIR="${REAL_PATH}"
+            shift 2
+            ;;
+        (*)
+            OPTS="${OPTS} ${1}"
+            shift 1
+            ;;
+        esac
+    done
+
+    # 从.smake.local中读取
+    if [ -z ${OUTPUT} ]; then
+        OUTPUT=$(_read_local OUTPUT)
+    else
+        # 保存到.smake.local
+        _store_local OUTPUT=${OUTPUT}
+    fi
+    if [ -z ${DOWNLOAD_DIR} ]; then
+        DOWNLOAD_DIR=$(_read_local DOWNLOAD_DIR)
+    else
+        # 保存到.smake.local
+        _store_local DOWNLOAD_DIR=${DOWNLOAD_DIR}
+    fi
+
+    # 使用默认值
+    if [ -z ${OUTPUT} ]; then
+        OUTPUT=${WORKDIR}/output
+        # 保存到.smake.local
+        _store_local OUTPUT=${OUTPUT}
+    fi
+    if [ -z ${DOWNLOAD_DIR} ]; then
+        DOWNLOAD_DIR=${WORKDIR}/dl
+        # 保存到.smake.local
+        _store_local DOWNLOAD_DIR=${DOWNLOAD_DIR}
+    fi
+
+
+    local env=BR2_DL_DIR=${DOWNLOAD_DIR}
+
+    # 执行最终命令
+    cd ${WORKDIR}/buildroot
+    exe export ${env}
+    exe make BR2_EXTERNAL=.. O=${OUTPUT} ${OPTS}
+    cd -
+}
+
+main "${@}"

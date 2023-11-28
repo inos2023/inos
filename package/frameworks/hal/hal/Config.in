@@ -1,0 +1,10 @@
+config BR2_PACKAGE_HAL
+  bool "hal"
+  default y
+  depends on BR2_INSTALL_LIBSTDCPP
+  select BR2_PACKAGE_GLOG
+  help
+    This is HAL module.
+
+comment "hal needs a toolchain C++"
+	depends on !BR2_INSTALL_LIBSTDCPP   

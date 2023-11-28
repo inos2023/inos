@@ -1,0 +1,5 @@
+config BR2_PACKAGE_INOS_BASE
+  bool "inos_base"
+  default y
+  help
+    This is base module in framework.

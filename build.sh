@@ -1,0 +1,1 @@
+board/hanwei/common/build.sh

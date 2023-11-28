@@ -1,0 +1,1 @@
+../hanwei/E2000Q/BoardConfig-e2000q-evb.mk

@@ -1,0 +1,44 @@
+export PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/neuware/bin:/usr/local/corex/bin"
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/neuware/lib64:/usr/local/corex/lib64:/usr/local/corex/lib
+
+if [ "$PS1" ]; then
+	if [ "`id -u`" -eq 0 ]; then
+		export PS1='# '
+	else
+		export PS1='$ '
+	fi
+fi
+
+export EDITOR='/bin/vi'
+
+# Source configuration files from /etc/profile.d
+for i in /etc/profile.d/*.sh ; do
+	if [ -r "$i" ]; then
+		. $i
+	fi
+done
+unset i
+
+pid=-1
+if [ -e "/var/run/dbus/sessionbus.pid" ];then
+	pid=`cat /var/run/dbus/sessionbus.pid`
+	echo find session bus, pid: $pid
+	if `ps aux | awk '{print $2}' | grep -q "^$pid$"` > /dev/null; then
+		export DBUS_SESSION_BUS_PID=`cat /var/run/dbus/sessionbus.pid`
+		export DBUS_SESSION_BUS_ADDRESS=`cat /var/run/dbus/sessionbus.address`
+		echo session dbus read="$DBUS_SESSION_BUS_PID" "$DBUS_SESSION_BUS_ADDRESS"
+	else
+		eval "export $(/usr/bin/dbus-launch)"
+		echo "$DBUS_SESSION_BUS_PID">/var/run/dbus/sessionbus.pid
+		echo "$DBUS_SESSION_BUS_ADDRESS">/var/run/dbus/sessionbus.address
+		echo session dbus runs now at pid="$DBUS_SESSION_BUS_PID" "$DBUS_SESSION_BUS_ADDRESS"
+	fi
+else
+	echo start session dbus ...
+	eval "export $(/usr/bin/dbus-launch)"
+	echo "$DBUS_SESSION_BUS_PID">/var/run/dbus/sessionbus.pid
+	echo "$DBUS_SESSION_BUS_ADDRESS">/var/run/dbus/sessionbus.address
+	echo session dbus runs now at pid="$DBUS_SESSION_BUS_PID" "$DBUS_SESSION_BUS_ADDRESS"
+fi
+
+source /etc/init.d/S99showlogo

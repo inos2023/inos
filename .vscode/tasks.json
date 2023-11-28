@@ -1,0 +1,48 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "qemu-system-x86_64",
+            "type": "shell",
+            "command": "qemu-system-x86_64",
+            "args": [
+                "-M", "pc",
+                "-kernel", "${workspaceFolder}/output/images/bzImage",
+                "-drive", "file=${workspaceFolder}/output/images/rootfs.ext2,if=virtio,format=raw",
+                "-append", "\"rootwait root=/dev/vda console=tty1 console=ttyS0\"",
+                "-net", "nic,model=virtio",
+                "-net", "nic",
+                "-m", "1G", // 指定内存大小
+                "-nographic",
+                // "-device", "e1000,netdev=eth0",
+                "-net", "user,hostfwd=tcp::1234-:1234,hostfwd=tcp::1022-:22", // 端口转发
+                // "-S", // 启动时停止
+                // "-gdb", "tcp::1234", // 对内核调试
+            ]
+        },
+
+        {
+            "label": "qemu-system-aarch64",
+            "type": "shell",
+            "command": "qemu-system-aarch64",
+            "args": [
+                "-machine", "virt,virtualization=true,gic-version=3",
+                "-kernel", "${workspaceFolder}/output/Image",
+                "-drive", "file=${workspaceFolder}/buildroot/output/images/rootfs.ext2,if=virtio,format=raw",
+                "-append", "\"rootwait root=/dev/vda console=ttyAMA0 rootfstype=ext4 init=/sbin/init rw console=ttyAMA0\"",
+                "-cpu", "cortex-a72",
+                "-net", "nic,model=virtio",
+                "-net", "nic",
+                "-m", "1G", // 指定内存大小
+                "-nographic",
+                // "-device", "e1000,netdev=eth0",
+                // "-S", // 启动时停止
+                // "-gdb", "tcp::1234", // 对内核调试
+            ]
+        }
+    ]
+
+    
+}

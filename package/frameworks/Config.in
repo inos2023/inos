@@ -1,0 +1,10 @@
+menu "Frameworks Config"
+    source "$BR2_EXTERNAL_INOS_PATH/package/frameworks/common/Config.in"
+    source "$BR2_EXTERNAL_INOS_PATH/package/frameworks/airuntime/Config.in"
+    source "$BR2_EXTERNAL_INOS_PATH/package/frameworks/hal/Config.in"
+    source "$BR2_EXTERNAL_INOS_PATH/package/frameworks/hardware/Config.in"
+    source "$BR2_EXTERNAL_INOS_PATH/package/frameworks/hal/Config.in"
+    source "$BR2_EXTERNAL_INOS_PATH/package/frameworks/base_runtime/Config.in"
+    source "$BR2_EXTERNAL_INOS_PATH/package/frameworks/media_runtime/Config.in"
+
+endmenu

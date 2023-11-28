@@ -1,0 +1,7 @@
+config BR2_PACKAGE_DEVICE_MANAGER
+  bool "device_manager"
+  default y
+  depends on BR2_PACKAGE_HOST_RUSTC_TARGET_ARCH_SUPPORTS
+  select BR2_PACKAGE_HOST_RUSTC
+  help
+    This is a device manager for devices.

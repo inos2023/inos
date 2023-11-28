@@ -1,0 +1,13 @@
+config BR2_PACKAGE_AIRUNTIME
+  bool "airuntime"
+  default y
+  depends on BR2_PACKAGE_HOST_RUSTC_TARGET_ARCH_SUPPORTS
+  select BR2_PACKAGE_HOST_RUSTC
+  select BR2_PACKAGE_GLOG
+  select BR2_PACKAGE_INOS_BASE
+  select BR2_PACKAGE_AI_CHIP
+  help
+    This is a airuntime package for cargo.
+
+comment "airuntime needs a toolchain C++"
+	depends on !BR2_INSTALL_LIBSTDCPP   

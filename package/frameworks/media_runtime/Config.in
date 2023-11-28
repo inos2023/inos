@@ -1,0 +1,11 @@
+config BR2_PACKAGE_MEDIA_RUNTIME
+  bool "media_runtime"
+  default y
+  depends on BR2_INSTALL_LIBSTDCPP
+  select BR2_PACKAGE_GLOG
+  depends on BR2_PACKAGE_AI_CHIP
+  help
+    This is media runtime module.
+
+comment "media runtime needs a toolchain C++"
+	depends on !BR2_INSTALL_LIBSTDCPP   

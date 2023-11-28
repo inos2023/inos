@@ -1,0 +1,6 @@
+
+source "$BR2_EXTERNAL_INOS_PATH/package/apps/Config.in"
+source "$BR2_EXTERNAL_INOS_PATH/package/frameworks/Config.in"
+source "$BR2_EXTERNAL_INOS_PATH/package/sdk/Config.in"
+source "$BR2_EXTERNAL_INOS_PATH/package/services/Config.in"
+source "$BR2_EXTERNAL_INOS_PATH/package/toolkit/Config.in"

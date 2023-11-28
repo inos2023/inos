@@ -1,0 +1,67 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-dockerfile
+{
+	"name": "Existing Dockerfile",
+	"build": {
+		// Sets the run context to one level up instead of the .devcontainer folder.
+		"context": ".",
+		// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
+		"dockerfile": "${localWorkspaceFolder}/.devcontainer/Dockerfile"
+	},
+	"customizations": {
+		"vscode": {
+				"extensions": [
+					"ms-vscode.cpptools-extension-pack",
+					"ms-vscode.cmake-tools",
+					"ms-azuretools.vscode-docker",
+					"redjue.git-commit-plugin",
+					"ms-vscode.makefile-tools",
+					"yzhang.markdown-all-in-one",
+					"ms-python.python",
+					"cschlosser.doxdocgen",
+					"rust-lang.rust-analyzer",
+					"maattdd.gitless",
+					"mhutchie.git-graph",
+					"rioj7.command-variable",
+					"usernamehw.errorlens"
+				],
+				"settings": {
+					"GitCommitPlugin.ShowEmoji": false,
+					"GitCommitPlugin.MaxSubjectCharacters": 40
+				}
+		}
+	},
+	// https://code.visualstudio.com/remote/advancedcontainers/add-local-file-mount
+	"mounts": [
+		"source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached",
+		// 绑定ccache缓存路径到host
+		"source=${localEnv:HOME}/.buildroot-ccache,target=/home/vscode/.buildroot-ccache,type=bind,consistency=cached",
+		// 保存zsh历史
+		"source=${localEnv:HOME}/.devcontainer-zshhistory,target=/home/vscode/.zsh_history,type=bind,consistency=cached",
+		// 个人git配置
+		"source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached",
+		"source=/usr/bin/cnmon,target=/usr/bin/cnmon,type=bind,consistency=cached"
+	],
+	"initializeCommand": "mkdir -p ${localEnv:HOME}/.ssh ${localEnv:HOME}/.buildroot-ccache && touch ${localEnv:HOME}/.devcontainer-zshhistory",
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Uncomment the next line to run commands after the container is created.
+	"postCreateCommand": "sudo ./tools/smake --install",
+
+	"runArgs": [
+		// 添加gitlab host绑定
+		"--add-host=gitlab.dros-cluster.com:10.101.12.138",
+		"--device=/dev/cambricon_dev0:/dev/cambricon_dev0",
+		"--device=/dev/cambricon_ctl"
+	]
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "devcontainer"
+}

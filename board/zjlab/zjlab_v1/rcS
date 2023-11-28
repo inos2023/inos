@@ -1,0 +1,33 @@
+#!/bin/sh
+
+
+# Start all init scripts in /etc/init.d
+# executing them in numerical order.
+#
+for i in /etc/init.d/S??* ;do
+
+     # Ignore dangling symlinks (if any).
+     [ ! -f "$i" ] && continue
+
+     case "$i" in
+	*.sh)
+	    # Source shell script for speed.
+	    (
+		trap - INT QUIT TSTP
+		set start
+		. $i
+	    )
+	    ;;
+	*)
+	    # No sh extension, so fork subprocess.
+	    $i start
+	    ;;
+    esac
+done
+
+source /etc/profile
+
+
+#insmod driver
+insmod /lib/modules/4.19.115+g65429ba/kernel/drivers/cambricon/cambricon-drv.ko
+insmod /lib/modules/4.19.115+g65429ba/kernel/drivers/iluvatar/iluvatar.ko

@@ -1,0 +1,4 @@
+menu "Application Config"
+    source "$BR2_EXTERNAL_INOS_PATH/package/apps/inos_flow/Config.in"
+    source "$BR2_EXTERNAL_INOS_PATH/package/apps/demo/Config.in"
+endmenu

@@ -1,0 +1,14 @@
+config BR2_PACKAGE_INOSFLOW
+  bool "inos_flow"
+  default y
+  depends on BR2_INSTALL_LIBSTDCPP
+  select BR2_PACKAGE_GLOG
+  select BR2_PACKAGE_JSON_FOR_MODERN_CPP
+  select BR2_PACKAGE_AIRUNTIME
+  select BR2_PACKAGE_BASE_RUNTIME
+  select BR2_PACKAGE_MEDIA_RUNTIME
+  help
+    This is inos flow.
+
+comment "inos flow needs a toolchain C++"
+	depends on !BR2_INSTALL_LIBSTDCPP   

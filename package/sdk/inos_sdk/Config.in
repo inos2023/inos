@@ -1,0 +1,11 @@
+config BR2_PACKAGE_INOS_SDK
+  bool "inos_sdk"
+  default y
+  depends on BR2_INSTALL_LIBSTDCPP
+  select BR2_PACKAGE_GLOG
+  select BR2_PACKAGE_OPENCV3
+  help
+    This is inos sdk.
+
+comment "inos sdk needs a toolchain C++"
+	depends on !BR2_INSTALL_LIBSTDCPP   

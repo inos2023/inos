@@ -1,0 +1,42 @@
+config BR2_PACKAGE_CAMBRICON_MLU
+  bool "cambricon_mlu"
+  depends on BR2_INSTALL_LIBSTDCPP
+  select BR2_PACKAGE_GLOG
+  select BR2_PACKAGE_INOS_BASE
+  depends on BR2_PACKAGE_AI_CHIP
+  default n
+  help
+    This is a cambricon_mlu module for HAL.
+comment "cambricon_mlu needs a toolchain C++"
+	depends on !BR2_INSTALL_LIBSTDCPP
+
+if BR2_PACKAGE_CAMBRICON_MLU
+
+config BR2_PACKAGE_CAMBRICON_MLU_BASE_DEVICE
+    bool "cambricon_mlu_base"
+    default n
+    help
+      Build the cambricon mlu base .so.
+
+config BR2_PACKAGE_CAMBRICON_MLU_NN_DEVICE
+    bool "cambricon_mlu_nn_device"
+    default n
+    help
+      Build the cambricon mlu nn device .so.
+
+config BR2_PACKAGE_CAMBRICON_MLU_MEDIA
+    bool "cambricon_mlu_media"
+    default n
+    help
+      Build the cambricon mlu media .so.
+
+endif
+
+if BR2_PACKAGE_CAMBRICON_MLU_NN_DEVICE
+config BR2_PACKAGE_CAMBRICON_MLU_NN_DEVICE_CNNL
+    bool "cambricon_mlu_cnnl"
+    default n
+    help
+      use cambricon mlu nn device by cnnl
+endif
+

@@ -1,0 +1,12 @@
+config BR2_PACKAGE_BASE_RUNTIME
+  bool "base_runtime"
+  default y
+  depends on BR2_INSTALL_LIBSTDCPP
+  select BR2_PACKAGE_GLOG
+  select BR2_PACKAGE_DBUS
+  select BR2_PACKAGE_JSON_FOR_MODERN_CPP
+  help
+    This is base runtime module.
+
+comment "base runtime needs a toolchain C++"
+	depends on !BR2_INSTALL_LIBSTDCPP   

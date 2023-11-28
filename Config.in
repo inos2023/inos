@@ -1,0 +1,14 @@
+menu "INOS Config"
+source "$BR2_EXTERNAL_INOS_PATH/package/Config.in"
+source "$BR2_EXTERNAL_INOS_PATH/linux/driver/Config.in"
+
+config INOS_TEST
+  bool "test"
+  default y
+  select BR2_PACKAGE_GTEST
+  help
+    开启后会编译单元测试相关的内容。
+
+
+
+endmenu

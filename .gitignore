@@ -1,0 +1,75 @@
+*~
+
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
+
+# Macos
+.DS_Store
+
+./vscode/*
+
+# exclude dir manage in repo
+buildroot
+package/frameworks/common/osal/osal
+package/frameworks/common/inos_base/inos_base
+
+package/frameworks/hal/modules/ai_chip/ai_chip
+package/frameworks/hal/hal/hal
+
+package/frameworks/hardware/vendors/cambricon_mlu/cambricon_mlu
+
+package/frameworks/cargo_sample/cargo_sample
+
+package/frameworks/airuntime/airuntime
+package/frameworks/airuntime/samples
+package/frameworks/base_runtime/base_runtime
+package/frameworks/media_runtime/media_runtime
+
+package/apps/demo/demo
+package/apps/inos_flow/inos_flow
+
+package/sdk/inos_sdk/inos_sdk
+
+package/services/device_manager/device_manager
+*.tar.gz
+
+
+package/toolkit/cambricon/cambricon_v2/cambricon_v2_arm64_toolkit/CHANGELOG.md
+package/toolkit/cambricon/cambricon_v2/cambricon_v2_x86_64_toolkit/CHANGELOG.md
+package/toolkit/iluvatar/iluvatar_mr50/iluvatar_arm64_toolkit/CHANGELOG.md
+
+prebuilts/*
+!prebuilts/.gitkeep
+linux/kernel/*
+!linux/kernel/Config.in
+boot/*
+!boot/.gitkeep
+!board/hanwei/common/gcc-tool.tar.gz
+!board/hanwei/common/fonts.tar.gz
+#CHANGELOG.md
+#!./CHANGELOG.md
+
+
+linux/driver/cambricon_driver/neuware-mlu270-*
+linux/driver/iluvatar_driver/0704_mr_3.1.1_aarch64
+linux/driver/cambricon_driver/CHANGELOG.md
+linux/driver/iluvatar_driver/CHANGELOG.md
+
+.vscode/settings.json
+.vscode/cmake-kits.json
+
+CMakeBuilds
+.repo
+output
+dl
+.smake.local
+.rootfs

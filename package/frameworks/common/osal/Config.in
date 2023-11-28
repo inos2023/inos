@@ -1,0 +1,4 @@
+config BR2_PACKAGE_COMMON_OSAL
+  bool "osal"
+  help
+    This is OSAL module in framework.

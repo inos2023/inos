@@ -1,0 +1,4 @@
+menu "HAL Config"
+    source "$BR2_EXTERNAL_INOS_PATH/package/frameworks/hal/hal/Config.in"
+    source "$BR2_EXTERNAL_INOS_PATH/package/frameworks/hal/modules/Config.in"
+endmenu

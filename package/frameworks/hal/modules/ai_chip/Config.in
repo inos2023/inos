@@ -1,0 +1,14 @@
+config BR2_PACKAGE_AI_CHIP
+  bool "ai_chip"
+  default y
+  depends on BR2_INSTALL_LIBSTDCPP
+  select BR2_PACKAGE_GLOG
+  select BR2_PACKAGE_HAL
+  select BR2_PACKAGE_INOS_BASE
+  select BR2_PACKAGE_GTEST if INOS_TEST
+  select BR2_PACKAGE_GTEST_GMOCK if INOS_TEST
+  help
+    This is a  AIChip module for HAL.
+
+comment "ai_chip needs a toolchain C++"
+	depends on !BR2_INSTALL_LIBSTDCPP

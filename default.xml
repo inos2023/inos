@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<manifest>
+    <!-- add remote here -->
+    
+    <remote fetch="ssh://git@gitlab.dros-cluster.com:10022/inos" name="inos"/>
+    <default sync-j="8" revision="refs/tags/v0.2.0"/>
+
+    <!-- add project here -->
+    <project  name="inos" path="." remote="inos" revision="refs/tags/v0.2.0"/>
+    <project  name="buildroot" path="buildroot" remote="inos" revision="refs/tags/v0.2.0"/> <!--revision 2023.02-->
+    <project  name="kernel/linux" path="linux/kernel" remote="inos" revision="refs/tags/v0.2.0"/>
+    <project  name="boot/uboot" path="boot" remote="inos" revision="refs/tags/v0.2.0"/>
+    <project  name="ToolChains" path="prebuilts" remote="inos" revision="refs/tags/v0.2.0"/>
+
+    <!-- hardware project -->
+    <project  name="hal/ai-chip" path="package/frameworks/hal/modules/ai_chip/ai_chip" remote="inos" revision="refs/tags/v0.2.0"/>
+    <project  name="hal/hal" path="package/frameworks/hal/hal/hal" remote="inos" revision="refs/tags/v0.2.0"/>
+    <project  name="vendors/cambricon_mlu" path="package/frameworks/hardware/vendors/cambricon_mlu/cambricon_mlu" remote="inos" revision="refs/tags/v0.2.0"/>
+
+    <!-- common project -->
+    <project  name="common/osal" path="package/frameworks/common/osal/osal" remote="inos" revision="refs/tags/v0.2.0"/>
+    <project  name="common/base" path="package/frameworks/common/inos_base/inos_base" remote="inos" revision="refs/tags/v0.2.0"/>
+
+    <!-- framework project -->
+    <project  name="framework/airuntime" path="package/frameworks/airuntime/airuntime" remote="inos" revision="refs/tags/v0.2.0"/>
+    <project  name="framework/base_runtime" path="package/frameworks/base_runtime/base_runtime" remote="inos" revision="refs/tags/v0.2.0"/>
+    <project  name="framework/media_runtime" path="package/frameworks/media_runtime/media_runtime" remote="inos" revision="refs/tags/v0.2.0"/>
+
+    <!-- services -->
+    <project  name="services/device_manager" path="package/services/device_manager/device_manager" remote="inos" revision="refs/tags/v0.2.0"/>
+
+    <!-- sdk -->
+    <project  name="apps/inos_sdk" path="package/sdk/inos_sdk/inos_sdk" remote="inos" revision="refs/tags/v0.2.0"/>
+
+    <!-- applications -->
+    <project  name="apps/demo" path="package/apps/demo/demo" remote="inos" revision="refs/tags/v0.2.0"/>
+    <project  name="apps/inos_flow" path="package/apps/inos_flow/inos_flow" remote="inos" revision="refs/tags/v0.2.0"/>
+
+    <!-- toolkit -->
+    <project  name="ToolKit/cambricon_v2_arm64" path="package/toolkit/cambricon/cambricon_v2/cambricon_v2_arm64_toolkit/" remote="inos" revision="refs/tags/v0.2.0"/>
+    <project  name="ToolKit/cambricon_v2_x86_64" path="package/toolkit/cambricon/cambricon_v2/cambricon_v2_x86_64_toolkit/" remote="inos" revision="refs/tags/v0.2.0"/>
+    <project  name="ToolKit/iluvatar_mr50" path="package/toolkit/iluvatar/iluvatar_mr50/iluvatar_arm64_toolkit/" remote="inos" revision="refs/tags/v0.2.0"/>
+    
+
+    <!-- modules -->
+    <project  name="modules/modules_cambricon" path="linux/driver/cambricon_driver" remote="inos" revision="refs/tags/v0.2.0"/>
+    <project  name="modules/modules_iluvatar_mr50_arm64" path="linux/driver/iluvatar_driver" remote="inos" revision="refs/tags/v0.2.0"/>
+    
+    
+</manifest>

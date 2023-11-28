@@ -1,0 +1,8 @@
+#!/bin/bash
+
+#MODEL NAME
+export HANWEI_MODEL=FT2004
+
+#SOFT VERSION
+export HANWEI_VERSION=V1.0.0
+

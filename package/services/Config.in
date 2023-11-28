@@ -1,0 +1,4 @@
+menu "Services Config"
+    source "$BR2_EXTERNAL_INOS_PATH/package/services/device_manager/Config.in"
+    source "$BR2_EXTERNAL_INOS_PATH/package/services/service-1/Config.in"
+endmenu
